@@ -1,0 +1,26 @@
+version: '3.4'
+services:
+  db:
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./tmp/backups:/tmp
+  app:
+    build: .
+    command: bundle exec rails s
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+      - .:/usr/src/app:cached
+      - bundle_cache:/usr/local/bundle
+volumes:
+  bundle_cache:
+  pgdata:
