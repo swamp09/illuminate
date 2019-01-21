@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,25 +12,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_16_153806) do
-
+ActiveRecord::Schema.define(version: 20_190_116_153_806) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "actors", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "icon_url", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_actors_on_name", unique: true
+  create_table 'actors', force: :cascade do |t|
+    t.string 'name', null: false
+    t.string 'icon_url', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['name'], name: 'index_actors_on_name', unique: true
   end
 
-  create_table "events", force: :cascade do |t|
-    t.string "type", null: false
-    t.integer "actor_id", null: false
-    t.datetime "timestamp", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'events', force: :cascade do |t|
+    t.string 'type', null: false
+    t.integer 'actor_id', null: false
+    t.datetime 'timestamp', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
-
 end

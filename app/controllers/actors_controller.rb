@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActorsController < ApplicationController
   before_action :set_actor, only: :show
 
@@ -5,8 +7,7 @@ class ActorsController < ApplicationController
     @actors = Actor.all
   end
 
-  def show
-  end
+  def show; end
 
   private
 

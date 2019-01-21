@@ -1,10 +1,12 @@
-require "uri"
-require "net/https"
-require "json"
+# frozen_string_literal: true
+
+require 'uri'
+require 'net/https'
+require 'json'
 
 namespace :get_actors do
-  task :from_issue => :environment do
-    def http_get(uri, extra_headers={})
+  task from_issue: :environment do
+    def http_get(uri, extra_headers = {})
       parsed_uri = URI(uri)
       # if ENV['GITHUB_ACCESS_TOKEN']
       #   extra_headers["Authorization"] = "token #{ENV['GITHUB_ACCESS_TOKEN']}"
@@ -21,6 +23,6 @@ namespace :get_actors do
 
     response = http_get 'https://api.github.com/repos/oss-gate/workshop/issues?state=all'
     body = JSON.parse(response.body)
-    body.map {|res| p res['user']['login']}
+    body.map { |res| p res['user']['login'] }
   end
 end

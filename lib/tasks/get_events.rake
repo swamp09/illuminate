@@ -1,10 +1,12 @@
-require "uri"
-require "net/https"
-require "json"
+# frozen_string_literal: true
+
+require 'uri'
+require 'net/https'
+require 'json'
 
 namespace :get_events do
-  task :from_actor => :environment do
-    def http_get(uri, extra_headers={})
+  task from_actor: :environment do
+    def http_get(uri, extra_headers = {})
       parsed_uri = URI(uri)
       response = nil
       http = Net::HTTP.new(parsed_uri.host, parsed_uri.port)
@@ -16,7 +18,7 @@ namespace :get_events do
       response
     end
     actor = 'swamp09'
-    EVENT_LIST = ['PushEvent', 'CreateEvent', 'IssuesEvent', 'IssueCommentEvent', 'PullRequestEvent', 'PullRequestReviewEvent', 'ForkEvent']
+    EVENT_LIST = %w[PushEvent CreateEvent IssuesEvent IssueCommentEvent PullRequestEvent PullRequestReviewEvent ForkEvent].freeze
     response = http_get "https://api.github.com/users/#{actor}/events"
     body = JSON.parse(response.body)
     puts body.select { |res| EVENT_LIST.include? res['type'] }
