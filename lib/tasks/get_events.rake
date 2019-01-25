@@ -1,26 +1,18 @@
 # frozen_string_literal: true
 
-require 'uri'
-require 'net/https'
-require 'json'
-
 namespace :get_events do
   task from_actor: :environment do
-    def http_get(uri, extra_headers = {})
-      parsed_uri = URI(uri)
-      response = nil
-      http = Net::HTTP.new(parsed_uri.host, parsed_uri.port)
-      http.use_ssl = parsed_uri.is_a?(URI::HTTPS)
-      http.start do |http|
-        http_request = Net::HTTP::Get.new(parsed_uri.path, extra_headers)
-        response = http.request(http_request)
+    client = Octokit::Client.new access_token: ENV['GITHUB_ACCESS_TOKEN']
+
+    client.auto_paginate = true
+    actors = Actor.all
+
+    EVENT_LIST = %w[PushEvent CreateEvent IssuesEvent PullRequestEvent PullRequestReviewEvent].freeze
+    actors.each do |actor|
+      response = client.user_events actor.name
+      response.select { |res| EVENT_LIST.include? res[:type] }.map do |res|
+        Event.create(actor_id: actor.id, type: res[:type].downcase, timestamp: res[:created_at])
       end
-      response
     end
-    actor = 'swamp09'
-    EVENT_LIST = %w[PushEvent CreateEvent IssuesEvent IssueCommentEvent PullRequestEvent PullRequestReviewEvent ForkEvent].freeze
-    response = http_get "https://api.github.com/users/#{actor}/events"
-    body = JSON.parse(response.body)
-    puts body.select { |res| EVENT_LIST.include? res['type'] }
   end
 end
