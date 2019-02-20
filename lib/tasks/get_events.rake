@@ -9,7 +9,7 @@ namespace :get_events do
 
     EVENT_LIST = %w[PushEvent CreateEvent IssuesEvent PullRequestEvent PullRequestReviewEvent].freeze
     actors.each do |actor|
-      response = client.user_events actor.name
+      response = client.user_public_events actor.name
       response.select { |res| EVENT_LIST.include? res[:type] }.map do |res|
         Event.create(actor_id: actor.id, type: res[:type].downcase, timestamp: res[:created_at])
       end
