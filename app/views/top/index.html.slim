@@ -1,1 +1,22 @@
-h1 test
+.page
+  .page__demo
+    .main-container.page__container
+      .timeline
+        .timeline__group
+          - year = nil
+          - @events.each do |event|
+            - if year != event.timestamp.year
+              span.timeline__year
+                = year = event.timestamp.year
+            .timeline__box
+              .timeline__date
+                span.timeline__month
+                  = day = event.timestamp.month
+                span.timeline__day
+                  = day = event.timestamp.day
+              .timeline__post
+                .timeline__content
+                  img height="50px" src=event.actor.icon_url
+                  a href="https://github.com/#{event.actor.name}"
+                    = event.actor.name
+                  = "::"+event.type

@@ -2,6 +2,6 @@
 
 class TopController < ApplicationController
   def index
-    @events = Event.all.limit(30)
+    @events = Event.includes(:actor).order(timestamp: :DESC)
   end
 end
