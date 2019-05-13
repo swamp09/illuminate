@@ -19,4 +19,5 @@
                   img height="50px" src=event.actor.icon_url
                   a href="https://github.com/#{event.actor.name}"
                     = event.actor.name
-                  = "::"+event.type
+                  a href="#{event.target_url}"
+                    = " :: " + event.type
