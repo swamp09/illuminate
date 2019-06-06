@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Github::Actor, type: :model do
   describe 'actorを保存できる' do
     before do
-      VCR.use_cassette("actor_get") do
+      VCR.use_cassette('actor_get') do
         Github::Actor.get
       end
     end
