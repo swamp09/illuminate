@@ -3,12 +3,12 @@
 class Github::Event < Github::Client
   EVENT_LIST = %w[PushEvent CreateEvent IssueEvent PullRequestEvent PullRequestReviewCommentEvent].freeze
 
-  def self.get
-    new.get
+  def self.get(limit: 50, offset: 0)
+    new.get(limit, offset)
   end
 
-  def get
-    actors = ::Actor.all
+  def get(limit, offset)
+    actors = ::Actor.all.limit(limit).offset(offset)
 
     actors.each do |actor|
       response = @client.user_public_events actor.name
