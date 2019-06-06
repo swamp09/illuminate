@@ -27,7 +27,7 @@ class Github::Event < Github::Client
   def target_url(res)
     case res[:type]
     when 'PushEvent'
-      "https://github.com/#{res[:repo][:name]}/commits/#{res[:payload][:commits]&.first&.[](:sha)}"
+      "https://github.com/#{res[:repo][:name]}/commit/#{res[:payload][:commits]&.first&.[](:sha)}"
     when 'PullRequestEvent'
       res[:payload][:pull_request][:html_url]
     when 'CreateEvent'
