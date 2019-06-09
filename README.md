@@ -13,3 +13,7 @@ bundle exec rails db:setup
 docker-compose up
 ```
 上記のあと、`localhost:3000` にブラウザからアクセスする。
+
+## GitHubAPIにアクセスする
+.envrc_sampleをコピーして.envrcを作る。
+`GITHUB_ACCESS_TOKEN`に自分のアクセストークンを設定する。
